@@ -5,16 +5,12 @@ class characters:
         self.name   = name
         self.health = health
         self.color  = color
-        self.move   = {
-            'attack': True,
-            'defend': True,
-            'heal'  : True
-        }
     
     def attack(self):
         return random.randint(10,20)
     
-    def defend(self):
+    def defend(self, damage):
+        self.health -= damage // 2
         return True
 
     def heal(self):
@@ -23,6 +19,3 @@ class characters:
             heal = 100
             self.health = heal
         return self.health
-
-    def choice(self, move: str):
-        return self.move.get(move, False)

@@ -1,3 +1,4 @@
+from ast import Global
 from rich.align   import Align
 from rich.bar     import Bar
 from character    import characters
@@ -7,8 +8,6 @@ from rich.console import Group
 from rich.panel   import Panel
 from rich.live    import Live
 from rich.layout  import Layout
-
-SIZE = 40
 
 #change the end value to creat the health bar move.
 bar = Bar(100, width=50, begin=0, color='red', end=100)
@@ -23,19 +22,22 @@ moves = Columns(
     ['1) Attack', '2) Defend', '3)Heal'],
     align = 'center',
     title = 'Options',
-    equal=True
+    equal=True,
+    padding=(0,15)
 )
 
 Player = Columns(
     [HealthBar, moves],
     column_first=True,
-    align='center'
+    align='center',
+    padding=(3,0)
 )
 
 Enemy = Columns(
     [HealthBar, moves],
     column_first=True,
-    align='center'
+    align='center',
+    padding=(3,0)
 )
 
 #creates a decent looking Health bar
@@ -60,18 +62,16 @@ def main():
     player = characters('player', color='blue')
     enemy = characters('Enemy', color='red')
 
-    enemy_healthBar = Layout(Panel(Align.center(HealthBar, vertical='top'), title="Enemy", style="red"))
-
-    Player = Layout(Panel(Align.center(Player, vertical='top'), title= player.name, style= player.color))
-    Enemy = Layout(Panel(Align.center(Enemy, vertical='top'), title= enemy.name, style= enemy.color))
+    player_layout = Layout(Panel(Align.center(Player, vertical='top'), title= player.name, style= player.color))
+    enemy_layout = Layout(Panel(Align.center(Enemy, vertical='top'), title= enemy.name, style= enemy.color))
 
     layout["bottom"].split_row(
-        Player,
-        Enemy
+        player_layout,
+        enemy_layout
     )
 
     print(layout)
 
 
-if '__name__' == '__main__':
+if __name__ == '__main__':
     main()
