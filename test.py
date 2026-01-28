@@ -61,6 +61,7 @@ Enemy = Layout(Panel(Align.center(Enemy, vertical='top'), title="Enemy", style="
 
 layout["bottom"].split_row(
     Player,
+    Player,
     Enemy
 )
 

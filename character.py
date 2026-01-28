@@ -1,10 +1,11 @@
 import random
 
-class Player:
-    def __init__(self, name, health=100):
-        self.name = name
+class characters:
+    def __init__(self, name: str, health=100, color='white'):
+        self.name   = name
         self.health = health
-        self.move = {
+        self.color  = color
+        self.move   = {
             'attack': True,
             'defend': True,
             'heal'  : True
