@@ -1,12 +1,11 @@
-from ast import Global
 from rich.align   import Align
 from rich.bar     import Bar
 from character    import characters
 from rich.columns import Columns
+from pynput       import keyboard
+from keylogger    import KeyLogger
 from rich         import print
-from rich.console import Group
 from rich.panel   import Panel
-from rich.live    import Live
 from rich.layout  import Layout
 
 #change the end value to creat the health bar move.
@@ -40,12 +39,6 @@ Enemy = Columns(
     padding=(3,0)
 )
 
-#creates a decent looking Health bar
-#live will be used to make the health bar and stuff move visually
-#with Live(Panel.fit(Align.center(bar), padding=0)) as live:
-#    live.start()
-
-
 layout = Layout()
 
 layout.split_column(
@@ -57,14 +50,13 @@ layout.split_column(
     Layout(name="bottom", ratio=2)
 )
 
-
 def main():
     player = characters('player', color='blue')
-    enemy = characters('Enemy', color='red')
+    enemy = characters('Enemy', color='red')       
 
     player_layout = Layout(Panel(Align.center(Player, vertical='top'), title= player.name, style= player.color))
     enemy_layout = Layout(Panel(Align.center(Enemy, vertical='top'), title= enemy.name, style= enemy.color))
-
+    
     layout["bottom"].split_row(
         player_layout,
         enemy_layout
@@ -72,6 +64,10 @@ def main():
 
     print(layout)
 
+    logger = KeyLogger("Player")
+
+    with keyboard.Listener(on_press=logger.on_press) as listener:
+       listener.join()
 
 if __name__ == '__main__':
     main()
